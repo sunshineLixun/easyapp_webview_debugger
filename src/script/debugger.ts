@@ -94,7 +94,7 @@ export const errorHandler = (error: unknown): void => {
   }
 };
 
-export const clickSavePhotoLibrary = (): void => {
+export const clickSharePhoto = (): void => {
   if (typeof window.navigator.share !== "function") {
     window.alert("Error: navigator.share() is not implemented.");
     return;

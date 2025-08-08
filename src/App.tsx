@@ -10,7 +10,7 @@ import {
   clickCheckCookies,
   clickCustomScheme,
   selectFileFromInput,
-  clickSavePhotoLibrary,
+  clickSharePhoto,
   clickDeviceLocation,
   clickCameraMicrophone,
   getHistoryFromQuery,
@@ -183,8 +183,8 @@ function App() {
               alt="sample"
               className="w-20 h-20"
             />
-            <Button onClick={clickSavePhotoLibrary}>
-              Save to photo library
+            <Button onClick={clickSharePhoto}>
+              Share
             </Button>
           </div>
         </section>
@@ -202,6 +202,7 @@ function App() {
             <video
               className="w-[400px] h-[300px] bg-black/5 rounded"
               muted
+              autoPlay
               playsInline
             />
             <div className="flex gap-3">
