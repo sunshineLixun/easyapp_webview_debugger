@@ -2,7 +2,11 @@ export const clickAdd = (): void => {
   const params = new URLSearchParams(window.location.search);
   const queries = Object.fromEntries(params.entries());
   if ("history" in queries) {
-    const current = Number.parseInt(String((queries as Record<string, string>).history), 10) || 0;
+    const current =
+      Number.parseInt(
+        String((queries as Record<string, string>).history),
+        10
+      ) || 0;
     window.location.href = `?history=${current + 1}`;
   } else {
     window.location.href = "?history=1";
@@ -86,7 +90,12 @@ export const selectFileFromInput = (input: HTMLInputElement): void => {
 };
 
 export const errorHandler = (error: unknown): void => {
-  if (error && typeof error === "object" && "name" in error && "message" in error) {
+  if (
+    error &&
+    typeof error === "object" &&
+    "name" in error &&
+    "message" in error
+  ) {
     const named = error as { name: string; message: string };
     window.alert(`Error(${named.name}): ${named.message}`);
   } else {
@@ -148,7 +157,11 @@ export const clickDeviceLocation = (): void => {
     window.alert("Geolocation is not supported in this browser");
     return;
   }
-  window.navigator.geolocation.getCurrentPosition(successHandler, errorHandler, options);
+  window.navigator.geolocation.getCurrentPosition(
+    successHandler,
+    errorHandler,
+    options
+  );
 };
 
 export const clickCameraMicrophone = (): void => {
@@ -184,7 +197,9 @@ export const getHistoryFromQuery = (): number => {
 };
 
 export const isReloadNavigation = (): boolean => {
-  const entries = window.performance.getEntriesByType("navigation") as PerformanceEntry[];
+  const entries = window.performance.getEntriesByType(
+    "navigation"
+  ) as PerformanceEntry[];
   const nav = entries[0] as PerformanceNavigationTiming | undefined;
   return Boolean(nav && (nav as PerformanceNavigationTiming).type === "reload");
 };
@@ -192,8 +207,10 @@ export const isReloadNavigation = (): boolean => {
 export type DebugProperties = Record<string, string | number | boolean | null>;
 
 export const getProperties = (): DebugProperties => {
-  const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
-  const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+  const viewportWidth =
+    window.innerWidth || document.documentElement.clientWidth || 0;
+  const viewportHeight =
+    window.innerHeight || document.documentElement.clientHeight || 0;
   const timezone = (() => {
     try {
       return Intl.DateTimeFormat().resolvedOptions().timeZone ?? null;
@@ -213,7 +230,9 @@ export const getProperties = (): DebugProperties => {
     userAgent: window.navigator.userAgent,
     platform: window.navigator.platform,
     language: window.navigator.language,
-    languages: Array.isArray(window.navigator.languages) ? window.navigator.languages.join(", ") : null,
+    languages: Array.isArray(window.navigator.languages)
+      ? window.navigator.languages.join(", ")
+      : null,
     cookiesEnabled: window.navigator.cookieEnabled,
     online: window.navigator.onLine,
     devicePixelRatio: window.devicePixelRatio || 1,
@@ -231,7 +250,10 @@ export const getProperties = (): DebugProperties => {
 
 export const copyTextToClipboard = async (text: string): Promise<void> => {
   try {
-    if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+    if (
+      navigator.clipboard &&
+      typeof navigator.clipboard.writeText === "function"
+    ) {
       await navigator.clipboard.writeText(text);
       return;
     }
@@ -251,3 +273,32 @@ export const copyTextToClipboard = async (text: string): Promise<void> => {
     document.body.removeChild(textarea);
   }
 };
+
+export function sendSomethisToSwiftUI() {
+  // Limit the random string length to a maximum of 16
+  const maxLen = 16;
+  const randomLen = Math.floor(Math.random() * maxLen) + 1; // 1 to 16
+  // @ts-ignore
+  if (window.sample && typeof window.sample.doSomething === "function") {
+    //  @ts-ignore
+    window.sample.doSomething(generateRandomString(randomLen));
+  }
+}
+
+export function generateRandomString(length: number = 16): string {
+  const maxLen = 16;
+  const finalLength = Math.min(Math.max(1, Math.floor(length)), maxLen);
+  const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+  for (let i = 0; i < finalLength; i++) {
+    const randomIndex = Math.floor(Math.random() * chars.length);
+    result += chars[randomIndex];
+  }
+  return result;
+}
+
+
+export function showSwiftUIMessage(message: string) {
+  window.alert(message);
+}

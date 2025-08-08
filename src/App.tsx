@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import reactLogo from "./assets/react.svg";
-import "./index.css"
+import "./index.css";
 import {
   clickAdd,
   clickShowAlert,
@@ -17,7 +17,9 @@ import {
   isReloadNavigation,
   getProperties,
   copyTextToClipboard,
+  sendSomethisToSwiftUI,
 } from "./script/debugger";
+import { registerReceiveMessageFunctions, registerSendMessageFunctions } from "./script/script-config";
 
 function App() {
   const [schemeUrl, setSchemeUrl] = useState("sms://");
@@ -25,7 +27,6 @@ function App() {
   const [properties, setProperties] = useState<
     Record<string, string | number | boolean | null>
   >({});
-
 
   useEffect(() => {
     // mimic previous behavior: on reload, reset history to 0 without reloading the page
@@ -37,11 +38,13 @@ function App() {
     setHistoryCount(getHistoryFromQuery());
     setProperties(getProperties());
 
-    window.document.title = "WebView Debugger"
+    window.document.title = "WebView Debugger";
+
+    registerSendMessageFunctions()
+
+    registerReceiveMessageFunctions()
+
   }, []);
-
-
-
 
   const Button = useMemo(
     () =>
@@ -183,9 +186,7 @@ function App() {
               alt="sample"
               className="w-20 h-20"
             />
-            <Button onClick={clickSharePhoto}>
-              Share
-            </Button>
+            <Button onClick={clickSharePhoto}>Share</Button>
           </div>
         </section>
 
@@ -208,6 +209,13 @@ function App() {
             <div className="flex gap-3">
               <Button onClick={clickCameraMicrophone}>Start</Button>
             </div>
+          </div>
+        </section>
+
+        <section className="rounded-lg border p-4">
+          <h2 className="text-lg font-medium mb-3">SwiftUI</h2>
+          <div className="flex flex-wrap gap-3">
+            <Button onClick={sendSomethisToSwiftUI}>Send Something to SwiftUI</Button>
           </div>
         </section>
       </main>
