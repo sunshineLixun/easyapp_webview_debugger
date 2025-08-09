@@ -29,9 +29,7 @@ export function registerSendMessageFunctions() {
  */
 export function registerReceiveMessageFunctions() {
   //@ts-ignore
-  window.sample = {
-    showSwiftUIMessage: showSwiftUIMessage,
-  };
+  window.sample.showSwiftUIMessage = showSwiftUIMessage;
 
   // If you want to receive messages from SwiftUI, you can register your functions here
 }
